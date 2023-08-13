@@ -7,6 +7,7 @@ import { useEffect } from "react"
 import "./index.less"
 import PDFViewer from "@/pages/Doc/detail/viewer/pdf"
 import DocViewer from "@cyntler/react-doc-viewer"
+import { Spin } from "antd"
 
 const BookDocument = () => {
 
@@ -14,6 +15,8 @@ const BookDocument = () => {
 
     const [type, setType] = React.useState<string>("")
     const [pdfUrl, setPdfUrl] = React.useState<string>("")
+    const [URL, setURL] = React.useState<string>("")
+    const [loading , setLoading] = React.useState<boolean>(true)
 
     useEffect(()=>{
         // 清除原本markdown遗留的
@@ -31,6 +34,8 @@ const BookDocument = () => {
                 "Identify": localStorage.getItem("MD_token") || ""
             }
         }).then((res) => {
+            setURL(res.data.URL)
+
             if (res.data.Type === "markdown") {
                 setType("markdown")
 
@@ -67,11 +72,21 @@ const BookDocument = () => {
             } else if (res.data.Type === "docx") {
                 setType("docx")
             }
+
+            setLoading(false)
         })
     }, [params.docUuid])
 
     const headers = {
         "Identify": localStorage.getItem("MD_token") || ""
+    }
+
+    if (loading) {
+        return (
+            <div>
+                <Spin />
+            </div>
+        )
     }
 
     return (
@@ -88,7 +103,7 @@ const BookDocument = () => {
                 </> : <></>}
                 {
                     type === "pdf" ? <>
-                    <PDFViewer uri={prefix + "/api/v1/doc/get/" + params.docUuid} />
+                    <PDFViewer uri={prefix + URL} />
                     </> : <></>
                 }
                 {
@@ -97,7 +112,7 @@ const BookDocument = () => {
                         height: "90vh"
                     }} requestHeaders={headers} documents={[
                        {
-                        uri: prefix + "/api/v1/doc/get/" + params.docUuid,
+                        uri: prefix + URL,
                         // uri : "https://raw.githubusercontent.com/plutext/docx4j/VERSION_11_4_8/docs/Docx4j_GettingStarted.docx",
                         fileType: "docx"
                        }
