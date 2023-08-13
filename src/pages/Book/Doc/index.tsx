@@ -97,8 +97,8 @@ const BookDocument = () => {
                         height: "90vh"
                     }} requestHeaders={headers} documents={[
                        {
-                        // uri: prefix + "/api/v1/doc/get/" + params.docUuid,
-                        uri : "https://raw.githubusercontent.com/plutext/docx4j/VERSION_11_4_8/docs/Docx4j_GettingStarted.docx",
+                        uri: prefix + "/api/v1/doc/get/" + params.docUuid,
+                        // uri : "https://raw.githubusercontent.com/plutext/docx4j/VERSION_11_4_8/docs/Docx4j_GettingStarted.docx",
                         fileType: "docx"
                        }
                     ]} />
