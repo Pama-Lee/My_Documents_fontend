@@ -71,7 +71,7 @@ const BookDocument = () => {
     }, [params.docUuid])
 
     const headers = {
-        Identify: localStorage.getItem("MD_token") || ""
+        "Identify": localStorage.getItem("MD_token") || ""
     }
 
     return (
