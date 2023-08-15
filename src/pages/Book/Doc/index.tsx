@@ -39,7 +39,7 @@ const BookDocument = () => {
             if (res.data.Type === "markdown") {
                 setType("markdown")
 
-                request(prefix + "/api/v1/doc/get/" + params.docUuid, {
+                request(prefix + URL, {
                     method: "GET",
                     headers: {
                         "Identify": localStorage.getItem("MD_token") || ""
